@@ -14,5 +14,5 @@ public class CourseModel {
     public String name;
     @ElementCollection
     @CollectionTable(name = "course_model_tags", joinColumns = @JoinColumn(name = "course_id"))
-    public List<String> tags;
+    public List<String> tag;
 }
