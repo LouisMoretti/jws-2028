@@ -7,11 +7,4 @@ import lombok.NoArgsConstructor;
 @Getter
 public class ReverseRequest {
     private String content;
-//    String original;
-//    String reversed;
-//
-//    public ReverseRequest(String original) {
-//        this.original = original;
-//        this.reversed = new StringBuilder(original).reverse().toString();
-//    }
 }
