@@ -10,9 +10,13 @@ import jakarta.ws.rs.core.Response;
 
 @Path("/start")
 @Consumes(MediaType.APPLICATION_JSON)
-public class StartEndpoint {
+public class StartResource {
     @POST
     public Response postStart(StartRequest request) {
+        // Validate entries or return status 400
+
+        // Call service to: Clear all the database tables. Initialize and start the game.
+
         return Response.ok(new StartResponse(), MediaType.APPLICATION_JSON).build();
     }
 }
