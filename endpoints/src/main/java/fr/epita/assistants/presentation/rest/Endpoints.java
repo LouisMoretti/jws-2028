@@ -3,10 +3,12 @@ package fr.epita.assistants.presentation.rest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import fr.epita.assistants.presentation.rest.request.ReverseRequest;
 import fr.epita.assistants.presentation.rest.response.HelloResponse;
 import fr.epita.assistants.presentation.rest.response.ReverseResponse;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/")
 public class Endpoints {
@@ -24,11 +26,18 @@ public class Endpoints {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @POST
-    public String reverse(String body) throws JsonProcessingException {
+    public Response reverse(String body) throws JsonProcessingException {
+        if (body.isEmpty())
+            return Response.status(400).build();
+
         ObjectMapper objectMapper = new ObjectMapper();
         String content = objectMapper.readTree(body).get("content").asText();
 
-        ReverseResponse response = new ReverseResponse(content);
-        return objectMapper.writer().writeValueAsString(response);
+        ReverseRequest request = new ReverseRequest(content);
+
+        ReverseResponse response = new ReverseResponse(request);
+
+        String json = objectMapper.writer().writeValueAsString(response);
+        return Response.ok(json, MediaType.APPLICATION_JSON).build();
     }
 }

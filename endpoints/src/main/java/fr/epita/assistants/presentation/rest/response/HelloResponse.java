@@ -7,6 +7,6 @@ public class HelloResponse {
     public String content;
 
     public HelloResponse(String name) {
-        this.content = "Hello " + name + "!";
+        this.content = "hello " + name;
     }
 }

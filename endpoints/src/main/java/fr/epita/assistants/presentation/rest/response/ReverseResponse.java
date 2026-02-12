@@ -1,5 +1,6 @@
 package fr.epita.assistants.presentation.rest.response;
 
+import fr.epita.assistants.presentation.rest.request.ReverseRequest;
 import lombok.Getter;
 
 @Getter
@@ -7,8 +8,8 @@ public class ReverseResponse {
     String original;
     String reversed;
 
-    public ReverseResponse(String original) {
-        this.original = original;
-        this.reversed = new StringBuilder(original).reverse().toString();
+    public ReverseResponse(ReverseRequest request) {
+        this.original = request.getOriginal();
+        this.reversed = request.getReversed();
     }
 }
