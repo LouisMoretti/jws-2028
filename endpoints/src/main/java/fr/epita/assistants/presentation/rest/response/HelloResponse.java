@@ -1,12 +1,12 @@
 package fr.epita.assistants.presentation.rest.response;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
 
-@Getter
+@AllArgsConstructor
 public class HelloResponse {
     public String content;
 
-    public HelloResponse(String name) {
-        this.content = "hello " + name;
+    public String getContent() {
+        return "hello " + content;
     }
 }

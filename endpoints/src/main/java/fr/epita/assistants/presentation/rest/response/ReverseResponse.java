@@ -9,7 +9,7 @@ public class ReverseResponse {
     String reversed;
 
     public ReverseResponse(ReverseRequest request) {
-        this.original = request.getOriginal();
-        this.reversed = request.getReversed();
+        this.original = request.getContent();
+        this.reversed = new StringBuilder(original).reverse().toString();
     }
 }

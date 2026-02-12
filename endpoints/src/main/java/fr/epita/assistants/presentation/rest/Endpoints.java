@@ -15,9 +15,7 @@ public class Endpoints {
     @Path("/hello/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     @GET
-    public String hello(@PathParam("name") String name) throws JsonProcessingException {
-        HelloResponse response = new HelloResponse(name);
-
+    public String getHello(@PathParam("name") HelloResponse response) throws JsonProcessingException {
         ObjectWriter objectWriter = new ObjectMapper().writer();
         return objectWriter.writeValueAsString(response);
     }
@@ -26,18 +24,15 @@ public class Endpoints {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @POST
-    public Response reverse(String body) throws JsonProcessingException {
-        if (body.isEmpty())
+    public Response postReverse(ReverseRequest request) throws JsonProcessingException {
+        if (request == null || request.getContent() == null)
             return Response.status(400).build();
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String content = objectMapper.readTree(body).get("content").asText();
-
-        ReverseRequest request = new ReverseRequest(content);
 
         ReverseResponse response = new ReverseResponse(request);
 
-        String json = objectMapper.writer().writeValueAsString(response);
-        return Response.ok(json, MediaType.APPLICATION_JSON).build();
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String json = objectMapper.writer().writeValueAsString(response);
+//        return Response.ok(json, MediaType.APPLICATION_JSON).build();
+        return Response.ok(response, MediaType.APPLICATION_JSON).build();
     }
 }
