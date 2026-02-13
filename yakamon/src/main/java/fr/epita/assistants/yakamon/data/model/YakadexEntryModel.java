@@ -2,9 +2,13 @@ package fr.epita.assistants.yakamon.data.model;
 
 import fr.epita.assistants.yakamon.utils.ElementType;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "yakadex_entry")
+@Getter
+@Setter
 public class YakadexEntryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

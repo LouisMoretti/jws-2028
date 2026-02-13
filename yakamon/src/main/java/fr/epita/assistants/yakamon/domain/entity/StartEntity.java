@@ -1,15 +1,17 @@
-package fr.epita.assistants.yakamon.presentation.api.response;
+package fr.epita.assistants.yakamon.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+
+import fr.epita.assistants.yakamon.utils.Point;
 import fr.epita.assistants.yakamon.utils.tile.TileType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @AllArgsConstructor
 @Getter
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class StartResponse {
+@Setter
+public class StartEntity {
     private List<List<TileType>> map;
 }

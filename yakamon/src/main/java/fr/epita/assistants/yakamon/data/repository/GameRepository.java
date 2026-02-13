@@ -1,0 +1,14 @@
+package fr.epita.assistants.yakamon.data.repository;
+
+import fr.epita.assistants.yakamon.data.model.GameModel;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
+
+@ApplicationScoped
+public class GameRepository implements PanacheRepository<GameModel> {
+    @Transactional
+    public void createGame(GameModel game) {
+        persist(game);
+    }
+}
