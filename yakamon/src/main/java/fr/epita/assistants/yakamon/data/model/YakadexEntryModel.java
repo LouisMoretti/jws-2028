@@ -25,7 +25,7 @@ public class YakadexEntryModel {
     public String description;
     @OneToOne
     @JoinColumn(name = "evolution_id")
-    public YakadexEntryModel evolutionId;
+    public YakadexEntryModel evolution;
     @Column(name = "evolve_threshold")
     public Integer evolveThreshold;
 }
