@@ -19,5 +19,5 @@ public class YakamonModel {
     public Integer energyPoints;
     @ManyToOne
     @JoinColumn(name = "yakadex_entry_id")
-    public YakadexEntryModel yakadexEntryId;
+    public YakadexEntryModel yakadexEntry;
 }
