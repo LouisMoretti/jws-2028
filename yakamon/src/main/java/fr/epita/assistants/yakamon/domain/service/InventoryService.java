@@ -1,5 +1,6 @@
 package fr.epita.assistants.yakamon.domain.service;
 
+import fr.epita.assistants.yakamon.converter.ItemConverter;
 import fr.epita.assistants.yakamon.data.model.ItemModel;
 import fr.epita.assistants.yakamon.data.repository.GameRepository;
 import fr.epita.assistants.yakamon.data.repository.ItemRepository;
@@ -10,6 +11,7 @@ import jakarta.inject.Inject;
 import org.apache.commons.lang.NotImplementedException;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @ApplicationScoped
 public class InventoryService {
@@ -19,12 +21,16 @@ public class InventoryService {
     @Inject
     ItemRepository itemRepository;
 
+    @Inject
+    ItemConverter itemConverter;
+
     public InventoryEntity getInventory() {
         // Check if game is started.
         gameRepository.checkGameExistence();
 
         // Get list of items
-        List<Item> items = itemRepository.getAllItems();
+        Stream<ItemModel> itemModelStream = itemRepository.getAllItems();
+        List<Item> items = itemModelStream.map(itemModel -> itemConverter.itemModelToItem(itemModel)).toList();
 
         return new InventoryEntity(items);
     }
