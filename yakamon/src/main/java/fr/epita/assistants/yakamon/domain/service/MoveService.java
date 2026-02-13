@@ -11,6 +11,7 @@ import fr.epita.assistants.yakamon.utils.Point;
 import fr.epita.assistants.yakamon.utils.tile.TileType;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.time.LocalDateTime;
@@ -34,6 +35,7 @@ public class MoveService {
     @ConfigProperty(name = "JWS_MOVEMENT_DELAY")
     Integer jwsMovementDelay;
 
+    @Transactional
     public MoveEntity movePlayer(Direction direction) {
         // Check if game is started.
         gameRepository.checkGameExistence();
@@ -48,14 +50,15 @@ public class MoveService {
 
         Point newPos = new Point(player.getPosX() + direction.getPoint().getPosX(),
                 player.getPosY() + direction.getPoint().getPosY());
-        if (!map.get(newPos.getPosX()).get(newPos.getPosY()).getTerrainType().isWalkable()) {
+        if (newPos.getPosX() < 0 || newPos.getPosY() < 0 || newPos.getPosY() >= map.size() || newPos.getPosX() >= map.get(newPos.getPosY()).size()
+                || !map.get(newPos.getPosY()).get(newPos.getPosX()).getTerrainType().isWalkable()) {
             ErrorCode.INVALID_DIRECTION_ERROR.throwException();
         }
 
-        playerRepository.update("pos_x", newPos.getPosX());
-        playerRepository.update("pos_y", newPos.getPosY());
-//        player.setPosX(newPos.getPosX());
-//        player.setPosY(newPos.getPosY());
+        // TODO; Move to repository.
+        player.setPosX(newPos.getPosX());
+        player.setPosY(newPos.getPosY());
+        player.setLastMove(LocalDateTime.now());
 
         return new MoveEntity(newPos);
     }
