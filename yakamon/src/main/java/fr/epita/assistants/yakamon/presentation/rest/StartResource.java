@@ -24,9 +24,18 @@ public class StartResource {
     @POST
     public Response postStart(StartRequest request) {
         // Validate entries or return status 400
+        if (request.getPlayerName() == null
+                || request.getPlayerName().isEmpty()
+                || request.getMapPath() == null
+                || request.getMapPath().isEmpty())
+            return Response.status(400).build();
 
         // Call service to: Clear all the database tables. Initialize and start the game.
         StartEntity startEntity = startService.startLogic(request.getPlayerName(), request.getMapPath());
+
+        // Handle errors
+        if (startEntity == null)
+            return Response.status(400).build();
 
         return Response.ok(startConverter.entityToResponse(startEntity), MediaType.APPLICATION_JSON).build();
     }
