@@ -6,7 +6,6 @@ import fr.epita.assistants.yakamon.data.repository.GameRepository;
 import fr.epita.assistants.yakamon.data.repository.YakadexEntryRepository;
 import fr.epita.assistants.yakamon.domain.entity.YakadexEntity;
 import fr.epita.assistants.yakamon.domain.entity.YakadexEntryEntity;
-import fr.epita.assistants.yakamon.utils.ErrorCode;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -31,19 +30,17 @@ public class YakadexService {
         Stream<YakadexEntryModel> yakadexEntryModels = yakadexEntryRepository.allEntriesFiltered(onlyMissing);
         List<YakadexEntryEntity> yakadexEntryEntities = yakadexEntryModels
                 .map(model -> yakadexEntryConverter.modelToEntity(model))
+                .peek(entry -> {
+                    if (entry.getCaught() == false) {
+                        entry.setFirstType(null);
+                        entry.setSecondType(null);
+                        entry.setEvolveThreshold(null);
+                        entry.setEvolutionId(null);
+                        entry.setDescription(null);
+                    }
+                })
                 .toList();
 
         return new YakadexEntity(yakadexEntryEntities);
-    }
-
-    public YakadexEntryEntity getYakadexEntry(long id) {
-        // Check if game is started.
-        gameRepository.checkGameExistence();
-
-        YakadexEntryModel entryModel = yakadexEntryRepository.getEntryById(id);
-        if (entryModel == null)
-            ErrorCode.YAKAMON_NON_EXISTENT.throwException();
-
-        return yakadexEntryConverter.modelToEntity(entryModel);
     }
 }
