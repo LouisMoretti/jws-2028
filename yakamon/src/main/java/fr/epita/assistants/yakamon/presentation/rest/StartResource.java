@@ -5,6 +5,7 @@ import fr.epita.assistants.yakamon.domain.entity.StartEntity;
 import fr.epita.assistants.yakamon.domain.service.StartService;
 import fr.epita.assistants.yakamon.presentation.api.request.StartRequest;
 import fr.epita.assistants.yakamon.presentation.api.response.StartResponse;
+import fr.epita.assistants.yakamon.utils.ErrorCode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -28,14 +29,10 @@ public class StartResource {
                 || request.getPlayerName().isEmpty()
                 || request.getMapPath() == null
                 || request.getMapPath().isEmpty())
-            return Response.status(400).build();
+            ErrorCode.START_ERROR.throwException();
 
         // Call service to: Clear all the database tables. Initialize and start the game.
         StartEntity startEntity = startService.startLogic(request.getPlayerName(), request.getMapPath());
-
-        // Handle errors
-        if (startEntity == null)
-            return Response.status(400).build();
 
         return Response.ok(startConverter.entityToResponse(startEntity), MediaType.APPLICATION_JSON).build();
     }

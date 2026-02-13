@@ -10,6 +10,7 @@ import static jakarta.ws.rs.core.Response.Status;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {
+    START_ERROR(Status.BAD_REQUEST, "Invalid path or invalid name provided."),
     EXAMPLE_ERROR(Status.INTERNAL_SERVER_ERROR, "This is an error example");
 
     private final Response.Status errorCode;

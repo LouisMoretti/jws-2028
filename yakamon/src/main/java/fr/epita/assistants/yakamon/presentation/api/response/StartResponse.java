@@ -11,5 +11,5 @@ import java.util.List;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class StartResponse {
-    private List<List<TileType>> map;
+    private List<List<TileType>> tiles;
 }
