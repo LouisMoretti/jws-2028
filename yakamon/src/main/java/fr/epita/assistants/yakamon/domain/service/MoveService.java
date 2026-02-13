@@ -41,7 +41,8 @@ public class MoveService {
         gameRepository.checkGameExistence();
 
         PlayerModel player = playerRepository.listAll().getFirst();
-        if ((player.lastMove != null) && (player.lastMove.isBefore(LocalDateTime.now().minus(((long) jwsTickDuration * jwsMovementDelay), ChronoUnit.MILLIS)))) {
+        LocalDateTime now = LocalDateTime.now();
+        if ((player.lastMove != null) && (player.lastMove.isAfter(now.minus(((long) jwsTickDuration * jwsMovementDelay), ChronoUnit.MILLIS)))) {
             ErrorCode.TOO_MANY_REQUESTS_ERROR.throwException();
         }
 
@@ -58,7 +59,7 @@ public class MoveService {
         // TODO; Move to repository.
         player.setPosX(newPos.getPosX());
         player.setPosY(newPos.getPosY());
-        player.setLastMove(LocalDateTime.now());
+        player.setLastMove(now);
 
         return new MoveEntity(newPos);
     }
