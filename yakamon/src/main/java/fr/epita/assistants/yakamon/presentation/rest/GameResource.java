@@ -1,10 +1,9 @@
 package fr.epita.assistants.yakamon.presentation.rest;
 
-import fr.epita.assistants.yakamon.converter.StartConverter;
-import fr.epita.assistants.yakamon.domain.entity.StartEntity;
-import fr.epita.assistants.yakamon.domain.service.StartService;
+import fr.epita.assistants.yakamon.converter.GameConverter;
+import fr.epita.assistants.yakamon.domain.entity.GameEntity;
+import fr.epita.assistants.yakamon.domain.service.GameService;
 import fr.epita.assistants.yakamon.presentation.api.request.StartRequest;
-import fr.epita.assistants.yakamon.presentation.api.response.StartResponse;
 import fr.epita.assistants.yakamon.utils.ErrorCode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -15,12 +14,12 @@ import jakarta.ws.rs.core.Response;
 
 @Path("/start")
 @Consumes(MediaType.APPLICATION_JSON)
-public class StartResource {
+public class GameResource {
     @Inject
-    StartService startService;
+    GameService gameService;
 
     @Inject
-    StartConverter startConverter;
+    GameConverter gameConverter;
 
     @POST
     public Response postStart(StartRequest request) {
@@ -32,8 +31,8 @@ public class StartResource {
             ErrorCode.START_ERROR.throwException();
 
         // Call service to: Clear all the database tables. Initialize and start the game.
-        StartEntity startEntity = startService.startLogic(request.getPlayerName(), request.getMapPath());
+        GameEntity gameEntity = gameService.startLogic(request.getPlayerName(), request.getMapPath());
 
-        return Response.ok(startConverter.entityToResponse(startEntity), MediaType.APPLICATION_JSON).build();
+        return Response.ok(gameConverter.entityToResponse(gameEntity), MediaType.APPLICATION_JSON).build();
     }
 }
