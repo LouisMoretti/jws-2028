@@ -7,4 +7,8 @@ import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class PlayerRepository implements PanacheRepository<PlayerModel> {
+    @Transactional
+    public void addPlayer(PlayerModel player) {
+        persist(player);
+    }
 }
