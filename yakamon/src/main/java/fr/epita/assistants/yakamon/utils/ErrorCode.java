@@ -10,7 +10,9 @@ import static jakarta.ws.rs.core.Response.Status;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {
-    YAKAMON_NON_EXISTENT(Status.NOT_FOUND, "This yakamon does not exist."),
+    INVALID_DIRECTION_ERROR(Status.BAD_REQUEST, "Invalid direction."),
+    TOO_MANY_REQUESTS_ERROR(Status.TOO_MANY_REQUESTS, "Player has recently moved and must wait before moving again."),
+    YAKAMON_NON_EXISTENT_ERROR(Status.NOT_FOUND, "This yakamon does not exist."),
     START_ERROR(Status.BAD_REQUEST, "Invalid path or invalid name provided."),
     NO_GAME_ERROR(Status.BAD_REQUEST, "The game is not running."),
     TOO_MANY_GAMES_ERROR(Status.BAD_REQUEST, "Currently more than one game instance in the table."),

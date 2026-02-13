@@ -5,7 +5,6 @@ import fr.epita.assistants.yakamon.data.model.YakadexEntryModel;
 import fr.epita.assistants.yakamon.data.repository.GameRepository;
 import fr.epita.assistants.yakamon.data.repository.YakadexEntryRepository;
 import fr.epita.assistants.yakamon.domain.entity.YakadexEntryEntity;
-import fr.epita.assistants.yakamon.utils.ElementType;
 import fr.epita.assistants.yakamon.utils.ErrorCode;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -27,7 +26,7 @@ public class YakadexEntryService {
 
         YakadexEntryModel entryModel = yakadexEntryRepository.getEntryById(id);
         if (entryModel == null)
-            ErrorCode.YAKAMON_NON_EXISTENT.throwException();
+            ErrorCode.YAKAMON_NON_EXISTENT_ERROR.throwException();
 
         YakadexEntryEntity entry = yakadexEntryConverter.modelToEntity(entryModel);
         if (entry.getCaught() == false) {

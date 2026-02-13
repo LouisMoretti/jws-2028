@@ -5,7 +5,7 @@ import fr.epita.assistants.yakamon.data.model.GameModel;
 import fr.epita.assistants.yakamon.data.model.ItemModel;
 import fr.epita.assistants.yakamon.data.model.PlayerModel;
 import fr.epita.assistants.yakamon.data.repository.*;
-import fr.epita.assistants.yakamon.domain.entity.GameEntity;
+import fr.epita.assistants.yakamon.domain.entity.StartEntity;
 import fr.epita.assistants.yakamon.utils.ErrorCode;
 import fr.epita.assistants.yakamon.utils.tile.ItemType;
 import fr.epita.assistants.yakamon.utils.tile.TileType;
@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @ApplicationScoped
-public class GameService {
+public class StartService {
     @Inject
     YakadexEntryRepository yakadexEntryRepository;
 
@@ -40,7 +40,7 @@ public class GameService {
     MapConverter mapConverter;
 
     @Transactional
-    public GameEntity startLogic(String playerName, String mapPath) {
+    public StartEntity startLogic(String playerName, String mapPath) {
         Path path = Paths.get(mapPath);
         if (!Files.exists(path))
             ErrorCode.START_ERROR.throwException();
@@ -82,6 +82,6 @@ public class GameService {
         itemRepository.addItem(yakaballs);
 
         List<List<TileType>> tiles = mapConverter.stringToMatrix(map);
-        return new GameEntity(tiles);
+        return new StartEntity(tiles);
     }
 }
