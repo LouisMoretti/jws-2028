@@ -8,6 +8,7 @@ import org.apache.commons.lang.NotImplementedException;
 @ApplicationScoped
 public class InventoryConverter {
     public InventoryResponse entityToResponse(InventoryEntity inventoryEntity) {
+        if (inventoryEntity == null) return null;
         return new InventoryResponse(inventoryEntity.getItems());
     }
 }

@@ -7,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class MoveConverter {
     public MoveResponse entityToResponse(MoveEntity move) {
+        if (move == null || move.getPosition() == null) return null;
         return new MoveResponse(move.getPosition().getPosX(), move.getPosition().getPosY());
     }
 }

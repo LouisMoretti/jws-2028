@@ -9,6 +9,7 @@ import java.util.UUID;
 @ApplicationScoped
 public class FeedConverter {
     public FeedEntity requestToEntity(String uuid, FeedRequest request) {
+        if (uuid == null || request == null) return null;
         return new FeedEntity(UUID.fromString(uuid), request.getQuantity());
     }
 }

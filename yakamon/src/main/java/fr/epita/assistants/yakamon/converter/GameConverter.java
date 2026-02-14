@@ -7,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class GameConverter {
     public StartResponse entityToResponse(GameEntity gameEntity) {
+        if (gameEntity == null) return null;
         return new StartResponse(gameEntity.getMap());
     }
 }

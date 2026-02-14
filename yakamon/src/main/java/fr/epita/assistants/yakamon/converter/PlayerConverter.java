@@ -8,6 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class PlayerConverter {
     public PlayerResponse entityToResponse(PlayerEntity player) {
+        if (player == null) return null;
         return new PlayerResponse(
                 player.getUuid(),
                 player.getName(),
@@ -21,6 +22,7 @@ public class PlayerConverter {
     }
 
     public PlayerEntity modelToEntity(PlayerModel player) {
+        if (player == null) return null;
         return new PlayerEntity(
                 player.getUuid(),
                 player.getName(),

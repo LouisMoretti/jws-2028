@@ -7,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class CollectConverter {
     public CollectResponse entityToResponse(CollectEntity collectEntity) {
+        if (collectEntity == null) return null;
         return new CollectResponse(collectEntity.getTile());
     }
 }

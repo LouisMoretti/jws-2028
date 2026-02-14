@@ -8,6 +8,7 @@ import org.apache.commons.lang.NotImplementedException;
 @ApplicationScoped
 public class ItemConverter {
     public Item itemModelToItem(ItemModel itemModel) {
+        if (itemModel == null) return null;
         return new Item(itemModel.getType(), itemModel.getQuantity());
     }
 }
