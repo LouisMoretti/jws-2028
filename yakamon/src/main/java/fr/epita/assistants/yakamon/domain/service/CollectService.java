@@ -59,7 +59,7 @@ public class CollectService {
 
         PlayerModel player = playerRepository.getPlayer();
         LocalDateTime now = LocalDateTime.now();
-        if ((player.lastCollect != null) && (player.lastMove.isAfter(now.minus(((long) jwsTickDuration * jwsCollectDelay),
+        if ((player.lastCollect != null) && (player.lastCollect.isAfter(now.minus(((long) jwsTickDuration * jwsCollectDelay),
                 ChronoUnit.MILLIS)))) {
             ErrorCode.TOO_MANY_REQUESTS_ERROR.throwException();
         }

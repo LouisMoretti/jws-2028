@@ -63,7 +63,7 @@ public class CatchService {
 
         PlayerModel player = playerRepository.getPlayer();
         LocalDateTime now = LocalDateTime.now();
-        if ((player.lastCatch != null) && (player.lastMove.isAfter(now.minus(((long) jwsTickDuration * jwsCatchDelay),
+        if ((player.lastCatch != null) && (player.lastCatch.isAfter(now.minus(((long) jwsTickDuration * jwsCatchDelay),
                 ChronoUnit.MILLIS)))) {
             ErrorCode.TOO_MANY_REQUESTS_ERROR.throwException();
         }

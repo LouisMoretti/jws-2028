@@ -73,7 +73,7 @@ public class PlayerResource {
         MoveEntity move = moveService.movePlayer(moveRequest.getDirection());
 
         MoveResponse moveResponse = moveConverter.entityToResponse(move);
-        return Response.ok(moveResponse, MediaType.APPLICATION_JSON).build();
+        return Response.ok(moveResponse).build();
     }
 
     @Path("/player")
@@ -82,6 +82,6 @@ public class PlayerResource {
         PlayerEntity player = playerService.getPlayer();
 
         PlayerResponse playerResponse = playerConverter.entityToResponse(player);
-        return Response.ok(playerResponse, MediaType.APPLICATION_JSON).build();
+        return Response.ok(playerResponse).build();
     }
 }
