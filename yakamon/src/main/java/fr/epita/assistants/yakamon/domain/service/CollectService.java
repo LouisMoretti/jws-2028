@@ -84,7 +84,7 @@ public class CollectService {
         map.get(pos.getPosY()).get(pos.getPosX()).setCollectible(NONE);
         mapString = mapConverter.matrixToString(map);
         gameRepository.updateMap(mapString);
-        
+
         return new CollectEntity(map.get(pos.getPosY()).get(pos.getPosX()));
     }
 }

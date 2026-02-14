@@ -25,9 +25,9 @@ public class MapConverter {
 
                 TerrainType terrainType = TerrainType.getTerrain(line.charAt(i * 3 + 1));
                 Collectible collectible = CollectibleUtils.getCollectible(line.charAt(i * 3 + 2));
-
-                TileType tile = new TileType(terrainType, collectible);
+                
                 for (int j = 0; j < nb; j++) {
+                    TileType tile = new TileType(terrainType, collectible);
                     lineTiles.add(tile);
                 }
             }
@@ -49,7 +49,7 @@ public class MapConverter {
             while (i + nb < mapLine.size()
                     && nb < 9
                     && mapLine.get(i + nb).getCollectible().equals(collectible)
-                    && mapLine.get(i).getTerrainType().equals(terrainType)) {
+                    && mapLine.get(i + nb).getTerrainType().equals(terrainType)) {
                 nb++;
             }
 
