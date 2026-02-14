@@ -16,8 +16,8 @@ import java.util.UUID;
 public class PlayerResponse {
     private UUID uuid;
     private String name;
-    private Integer poxX;
-    private Integer poxY;
+    private Integer posX;
+    private Integer posY;
     private LocalDateTime lastMove;
     private LocalDateTime lastCollect;
     private LocalDateTime lastCatch;
