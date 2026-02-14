@@ -5,6 +5,8 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
+import java.util.stream.Stream;
+
 @ApplicationScoped
 public class YakamonRepository implements PanacheRepository<YakamonModel> {
     public long yakamonCount() {
@@ -16,7 +18,7 @@ public class YakamonRepository implements PanacheRepository<YakamonModel> {
         persist(yakamon);
     }
 
-    public YakamonModel getYakamonById(long id) {
-        return findAll().stream().filter(yakamonModel -> yakamonModel.getYakadexEntry().getId() == id).findFirst().get();
+    public Stream<YakamonModel> getYakamons() {
+        return findAll().stream();
     }
 }

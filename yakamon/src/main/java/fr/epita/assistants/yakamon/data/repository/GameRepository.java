@@ -25,4 +25,9 @@ public class GameRepository implements PanacheRepository<GameModel> {
     public String getMap() {
         return listAll().getFirst().getMap();
     }
+
+    @Transactional
+    public void updateMap(String map) {
+        update("map", map);
+    }
 }

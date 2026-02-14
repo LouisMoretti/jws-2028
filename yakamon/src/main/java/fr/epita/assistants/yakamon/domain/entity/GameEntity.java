@@ -10,6 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class StartEntity {
+public class GameEntity {
     private List<List<TileType>> map;
 }

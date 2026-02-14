@@ -19,8 +19,10 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static fr.epita.assistants.yakamon.utils.tile.CollectibleType.YAKAMON;
+import static fr.epita.assistants.yakamon.utils.tile.ItemType.NONE;
 import static fr.epita.assistants.yakamon.utils.tile.ItemType.YAKABALL;
 
 @ApplicationScoped
@@ -89,9 +91,13 @@ public class CatchService {
         itemRepository.removeItem(1, YAKABALL);
         yakadexEntryRepository.setCaughtStateById(yakadexId);
 
-        // TODO; Update map.
+        map.get(pos.getPosY()).get(pos.getPosX()).setCollectible(NONE);
+        mapString = mapConverter.matrixToString(map);
+        gameRepository.updateMap(mapString);
 
-        return yakamonConverter.modelToEntity(yakamonRepository.getYakamonById(yakadexId));
+        YakamonModel yakamonModel1 =
+                yakamonRepository.getYakamons().filter(yakamonModelFilter -> yakamonModelFilter.getYakadexEntry().getId() == yakadexId).findFirst().get();
+        return yakamonConverter.modelToEntity(yakamonModel1);
     }
 
 }

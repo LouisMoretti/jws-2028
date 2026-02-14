@@ -1,9 +1,6 @@
 package fr.epita.assistants.yakamon.converter;
 
-import fr.epita.assistants.yakamon.utils.tile.Collectible;
-import fr.epita.assistants.yakamon.utils.tile.CollectibleUtils;
-import fr.epita.assistants.yakamon.utils.tile.TerrainType;
-import fr.epita.assistants.yakamon.utils.tile.TileType;
+import fr.epita.assistants.yakamon.utils.tile.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.apache.commons.lang.NotImplementedException;
 
@@ -22,7 +19,7 @@ public class MapConverter {
         String[] lines = map.split(";");
         for (String line : lines) {
             List<TileType> lineTiles = new ArrayList<TileType>();
-            int nbBloc = line.length()/3;
+            int nbBloc = line.length() / 3;
             for (int i = 0; i < nbBloc; i++) {
                 int nb = line.charAt(i * 3) - '0';
 
@@ -42,7 +39,38 @@ public class MapConverter {
         return tiles;
     }
 
+    private String listToString(List<TileType> mapLine) {
+        StringBuilder lineString = new StringBuilder();
+        for (int i = 0; i < mapLine.size(); i++) {
+            Collectible collectible = mapLine.get(i).getCollectible();
+            TerrainType terrainType = mapLine.get(i).getTerrainType();
+
+            int nb = 1;
+            while (i + nb < mapLine.size()
+                    && nb < 9
+                    && mapLine.get(i + nb).getCollectible().equals(collectible)
+                    && mapLine.get(i).getTerrainType().equals(terrainType)) {
+                nb++;
+            }
+
+            lineString.append(nb);
+            lineString.append(terrainType.getValue());
+            lineString.append(collectible.getCollectibleInfo().getValue());
+
+            i += nb - 1;
+        }
+
+        return lineString.toString();
+    }
+
     public String matrixToString(List<List<TileType>> map) {
-        throw new NotImplementedException();
+        StringBuilder mapString = new StringBuilder();
+        mapString.append(listToString(map.getFirst()));
+        for (int i = 1; i < map.size(); i++) {
+            mapString.append(';');
+            mapString.append(listToString(map.get(i)));
+        }
+
+        return mapString.toString();
     }
 }
