@@ -4,10 +4,7 @@ import fr.epita.assistants.yakamon.converter.CollectConverter;
 import fr.epita.assistants.yakamon.converter.MoveConverter;
 import fr.epita.assistants.yakamon.converter.PlayerConverter;
 import fr.epita.assistants.yakamon.converter.YakamonConverter;
-import fr.epita.assistants.yakamon.domain.entity.CatchEntity;
-import fr.epita.assistants.yakamon.domain.entity.CollectEntity;
-import fr.epita.assistants.yakamon.domain.entity.MoveEntity;
-import fr.epita.assistants.yakamon.domain.entity.PlayerEntity;
+import fr.epita.assistants.yakamon.domain.entity.*;
 import fr.epita.assistants.yakamon.domain.service.CatchService;
 import fr.epita.assistants.yakamon.domain.service.CollectService;
 import fr.epita.assistants.yakamon.domain.service.MoveService;
@@ -55,9 +52,9 @@ public class PlayerResource {
     @Path("/catch")
     @POST
     public Response postCatch() {
-        CatchEntity catchEntity = catchService.catchYakamon();
+        YakamonEntity yakamonEntity = catchService.catchYakamon();
 
-        YakamonResponse yakamonResponse = yakamonConverter.entityToResponse(catchEntity);
+        YakamonResponse yakamonResponse = yakamonConverter.entityToResponse(yakamonEntity);
         return Response.ok(yakamonResponse, MediaType.APPLICATION_JSON).build();
     }
 

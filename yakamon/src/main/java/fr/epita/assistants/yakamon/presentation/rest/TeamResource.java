@@ -1,7 +1,12 @@
 package fr.epita.assistants.yakamon.presentation.rest;
 
+import fr.epita.assistants.yakamon.converter.YakamonTeamConverter;
+import fr.epita.assistants.yakamon.domain.entity.YakamonTeamEntity;
+import fr.epita.assistants.yakamon.domain.service.TeamService;
 import fr.epita.assistants.yakamon.presentation.api.request.FeedRequest;
 import fr.epita.assistants.yakamon.presentation.api.request.RenameRequest;
+import fr.epita.assistants.yakamon.presentation.api.response.YakamonTeamResponse;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -10,10 +15,19 @@ import org.apache.commons.lang.NotImplementedException;
 @Path("/team")
 @Produces(MediaType.APPLICATION_JSON)
 public class TeamResource {
+    @Inject
+    TeamService teamService;
+
+    @Inject
+    YakamonTeamConverter yakamonTeamConverter;
+
     @Path("/")
     @GET
     public Response getTeam() {
-        throw new NotImplementedException();
+        YakamonTeamEntity yakamonTeam = teamService.getTeam();
+
+        YakamonTeamResponse response = yakamonTeamConverter.entityToResponse(yakamonTeam);
+        return Response.ok(response, MediaType.APPLICATION_JSON).build();
     }
 
     @Path("/{uuid}/evolve")

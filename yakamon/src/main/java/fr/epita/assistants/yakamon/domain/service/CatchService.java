@@ -7,6 +7,7 @@ import fr.epita.assistants.yakamon.data.model.YakadexEntryModel;
 import fr.epita.assistants.yakamon.data.model.YakamonModel;
 import fr.epita.assistants.yakamon.data.repository.*;
 import fr.epita.assistants.yakamon.domain.entity.CatchEntity;
+import fr.epita.assistants.yakamon.domain.entity.YakamonEntity;
 import fr.epita.assistants.yakamon.utils.ErrorCode;
 import fr.epita.assistants.yakamon.utils.Point;
 import fr.epita.assistants.yakamon.utils.tile.Collectible;
@@ -53,7 +54,7 @@ public class CatchService {
     @ConfigProperty(name = "JWS_CATCH_DELAY")
     Integer jwsCatchDelay;
 
-    public CatchEntity catchYakamon() {
+    public YakamonEntity catchYakamon() {
         // Check if game is started.
         gameRepository.checkGameExistence();
 
