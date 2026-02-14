@@ -6,7 +6,6 @@ import fr.epita.assistants.yakamon.data.repository.PlayerRepository;
 import fr.epita.assistants.yakamon.domain.entity.PlayerEntity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.apache.commons.lang.NotImplementedException;
 
 @ApplicationScoped
 public class PlayerService {

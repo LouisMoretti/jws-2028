@@ -8,7 +8,6 @@ import fr.epita.assistants.yakamon.domain.entity.InventoryEntity;
 import fr.epita.assistants.yakamon.utils.Item;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.apache.commons.lang.NotImplementedException;
 
 import java.util.List;
 import java.util.stream.Stream;

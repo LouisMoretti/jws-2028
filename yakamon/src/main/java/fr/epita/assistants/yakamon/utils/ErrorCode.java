@@ -10,6 +10,7 @@ import static jakarta.ws.rs.core.Response.Status;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {
+    NO_ITEM_AT_POS_ERROR(Status.BAD_REQUEST, "No item at the current position."),
     TEAM_IS_FULL_ERROR(Status.BAD_REQUEST, "Team is full."),
     NO_YAKAMON_AT_POS_ERROR(Status.BAD_REQUEST, "No Yakamon at the current position."),
     NOT_ENOUGH_YAKABALLS_ERROR(Status.BAD_REQUEST, "Not enough Yakaballs."),
