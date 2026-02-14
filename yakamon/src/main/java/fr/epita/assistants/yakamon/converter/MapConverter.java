@@ -25,7 +25,7 @@ public class MapConverter {
 
                 TerrainType terrainType = TerrainType.getTerrain(line.charAt(i * 3 + 1));
                 Collectible collectible = CollectibleUtils.getCollectible(line.charAt(i * 3 + 2));
-                
+
                 for (int j = 0; j < nb; j++) {
                     TileType tile = new TileType(terrainType, collectible);
                     lineTiles.add(tile);
