@@ -1,12 +1,17 @@
 package fr.epita.assistants.yakamon.presentation.rest;
 
+import fr.epita.assistants.yakamon.converter.MoveConverter;
+import fr.epita.assistants.yakamon.converter.PlayerConverter;
 import fr.epita.assistants.yakamon.converter.YakamonConverter;
 import fr.epita.assistants.yakamon.domain.entity.CatchEntity;
 import fr.epita.assistants.yakamon.domain.entity.MoveEntity;
+import fr.epita.assistants.yakamon.domain.entity.PlayerEntity;
 import fr.epita.assistants.yakamon.domain.service.CatchService;
 import fr.epita.assistants.yakamon.domain.service.MoveService;
+import fr.epita.assistants.yakamon.domain.service.PlayerService;
 import fr.epita.assistants.yakamon.presentation.api.request.MoveRequest;
 import fr.epita.assistants.yakamon.presentation.api.response.MoveResponse;
+import fr.epita.assistants.yakamon.presentation.api.response.PlayerResponse;
 import fr.epita.assistants.yakamon.presentation.api.response.YakamonResponse;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -27,7 +32,16 @@ public class PlayerResource {
     CatchService catchService;
 
     @Inject
+    PlayerService playerService;
+
+    @Inject
     YakamonConverter yakamonConverter;
+
+    @Inject
+    PlayerConverter playerConverter;
+
+    @Inject
+    MoveConverter moveConverter;
 
     @Path("/catch")
     @POST
@@ -49,13 +63,16 @@ public class PlayerResource {
     public Response postMove(MoveRequest moveRequest) {
         MoveEntity move = moveService.movePlayer(moveRequest.getDirection());
 
-        MoveResponse moveResponse = new MoveResponse(move.getPosition().getPosX(), move.getPosition().getPosY());
+        MoveResponse moveResponse = moveConverter.entityToResponse(move);
         return Response.ok(moveResponse, MediaType.APPLICATION_JSON).build();
     }
 
     @Path("/player")
     @GET
     public Response getPayer() {
-        throw new NotImplementedException();
+        PlayerEntity player = playerService.getPlayer();
+
+        PlayerResponse playerResponse = playerConverter.entityToResponse(player);
+        return Response.ok(playerResponse, MediaType.APPLICATION_JSON).build();
     }
 }

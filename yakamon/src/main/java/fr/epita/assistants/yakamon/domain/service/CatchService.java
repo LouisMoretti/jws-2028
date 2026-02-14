@@ -19,7 +19,6 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static fr.epita.assistants.yakamon.utils.tile.CollectibleType.YAKAMON;
 import static fr.epita.assistants.yakamon.utils.tile.ItemType.NONE;
