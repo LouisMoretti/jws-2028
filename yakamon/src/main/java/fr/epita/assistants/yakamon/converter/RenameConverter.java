@@ -9,6 +9,7 @@ import java.util.UUID;
 @ApplicationScoped
 public class RenameConverter {
     public RenameEntity requestToEntity(String uuid, RenameRequest request) {
+        if (uuid == null || request == null) return null;
         return new RenameEntity(UUID.fromString(uuid), request.getNewNickname());
     }
 }

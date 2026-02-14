@@ -8,6 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class YakadexEntryConverter {
     public YakadexEntryEntity modelToEntity(YakadexEntryModel yakadexEntryModel) {
+        if (yakadexEntryModel == null) return null;
         return new YakadexEntryEntity(
                 yakadexEntryModel.getId(),
                 yakadexEntryModel.getName(),
@@ -22,6 +23,7 @@ public class YakadexEntryConverter {
     }
 
     public YakadexEntryResponse entityToResponse(YakadexEntryEntity yakadexEntryEntity) {
+        if (yakadexEntryEntity == null) return null;
         return new YakadexEntryResponse(
                 yakadexEntryEntity.getId(),
                 yakadexEntryEntity.getName(),

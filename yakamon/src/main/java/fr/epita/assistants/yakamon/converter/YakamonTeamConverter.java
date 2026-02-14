@@ -7,14 +7,11 @@ import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class YakamonTeamConverter {
-    private final YakamonConverter yakamonConverter;
-
     @Inject
-    public YakamonTeamConverter(YakamonConverter yakamonConverter) {
-        this.yakamonConverter = yakamonConverter;
-    }
+    YakamonConverter yakamonConverter;
 
     public YakamonTeamResponse entityToResponse(YakamonTeamEntity yakamonTeam) {
+        if (yakamonTeam == null) return null;
         return new YakamonTeamResponse(yakamonTeam
                 .getYakamons()
                 .stream()

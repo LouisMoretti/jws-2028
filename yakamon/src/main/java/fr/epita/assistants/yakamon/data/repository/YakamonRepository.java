@@ -1,6 +1,6 @@
 package fr.epita.assistants.yakamon.data.repository;
 
-import fr.epita.assistants.yakamon.data.model.ItemModel;
+import fr.epita.assistants.yakamon.data.model.YakadexEntryModel;
 import fr.epita.assistants.yakamon.data.model.YakamonModel;
 import fr.epita.assistants.yakamon.utils.ErrorCode;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
@@ -49,5 +49,20 @@ public class YakamonRepository implements PanacheRepository<YakamonModel> {
         YakamonModel yakamon = getYakamonFromUUID(uuid);
         yakamon.setNickname(newNickname);
         return yakamon;
+    }
+
+    @Transactional
+    public YakamonModel evolve(UUID uuid, String s, int i, YakadexEntryModel evolution) {
+        YakamonModel yakamon = getYakamonFromUUID(uuid);
+        yakamon.setNickname(s);
+        yakamon.setEnergyPoints(i);
+        yakamon.setYakadexEntry(evolution);
+        return yakamon;
+    }
+
+    @Transactional
+    public void addEnergyFromUuid(UUID uuid, int quantity) {
+        YakamonModel yakamon = getYakamonFromUUID(uuid);
+        yakamon.energyPoints += quantity;
     }
 }

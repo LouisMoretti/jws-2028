@@ -11,6 +11,7 @@ public class YakadexConverter {
     YakadexEntryConverter yakadexEntryConverter;
 
     public YakadexResponse entityToResponse(YakadexEntity yakadexEntity) {
+        if (yakadexEntity == null) return null;
         return new YakadexResponse(yakadexEntity
                 .getEntries()
                 .stream()

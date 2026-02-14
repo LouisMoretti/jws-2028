@@ -39,6 +39,15 @@ public class ItemRepository implements PanacheRepository<ItemModel> {
         }
     }
 
+    public int scroogeAmount() {
+        Optional<ItemModel> optionalItem = find("type", ItemType.SCROOGE).singleResultOptional();
+        if (optionalItem.isEmpty()) {
+            return 0;
+        } else {
+            return optionalItem.get().getQuantity();
+        }
+    }
+
     @Transactional
     public void removeItem(int i, ItemType itemType) {
         Optional<ItemModel> optionalItem = find("type", itemType).singleResultOptional();

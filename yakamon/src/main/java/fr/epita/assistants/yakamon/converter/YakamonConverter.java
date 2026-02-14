@@ -8,11 +8,13 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class YakamonConverter {
     public YakamonEntity modelToEntity(YakamonModel yakamon) {
+        if (yakamon == null) return null;
         return new YakamonEntity(yakamon.getUuid(), yakamon.getNickname(), yakamon.getYakadexEntry().getId(),
                 yakamon.getEnergyPoints());
     }
 
     public YakamonResponse entityToResponse(YakamonEntity yakamon) {
+        if (yakamon == null) return null;
         return new YakamonResponse(yakamon.getUuid(), yakamon.getNickname(), yakamon.getYakadexId(),
                 yakamon.getEnergyPoints());
     }

@@ -10,12 +10,15 @@ import static jakarta.ws.rs.core.Response.Status;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {
+    NO_EVOLUTION_ERROR(Status.NOT_FOUND, "This yakamon has reached maximum level."),
+    NOT_ENOUGH_ENERGY_ERROR(Status.BAD_REQUEST, "Not enough energy."),
     INVALID_NAME_ERROR(Status.BAD_REQUEST, "Invalid name."),
     YAKAMON_NOT_FOUND_ERROR(Status.NOT_FOUND, "The yakamon was not found in the team."),
     NO_ITEM_AT_POS_ERROR(Status.BAD_REQUEST, "No item at the current position."),
     TEAM_IS_FULL_ERROR(Status.BAD_REQUEST, "Team is full."),
     NO_YAKAMON_AT_POS_ERROR(Status.BAD_REQUEST, "No Yakamon at the current position."),
     NOT_ENOUGH_YAKABALLS_ERROR(Status.BAD_REQUEST, "Not enough Yakaballs."),
+    NOT_ENOUGH_SCROOGE_ERROR(Status.BAD_REQUEST, "Not enough Scrooges."),
     INVALID_DIRECTION_ERROR(Status.BAD_REQUEST, "Invalid direction."),
     TOO_MANY_REQUESTS_ERROR(Status.TOO_MANY_REQUESTS, "Player has recently done this action and must wait before doing it again."),
     YAKAMON_NON_EXISTENT_ERROR(Status.NOT_FOUND, "This yakamon does not exist."),

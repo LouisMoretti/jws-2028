@@ -1,9 +1,13 @@
 package fr.epita.assistants.yakamon.domain.service;
 
+import fr.epita.assistants.yakamon.converter.YakamonConverter;
+import fr.epita.assistants.yakamon.data.model.YakadexEntryModel;
 import fr.epita.assistants.yakamon.data.model.YakamonModel;
 import fr.epita.assistants.yakamon.data.repository.GameRepository;
+import fr.epita.assistants.yakamon.data.repository.YakadexEntryRepository;
 import fr.epita.assistants.yakamon.data.repository.YakamonRepository;
 import fr.epita.assistants.yakamon.domain.entity.YakamonEntity;
+import fr.epita.assistants.yakamon.utils.ErrorCode;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.apache.commons.lang.NotImplementedException;
@@ -18,16 +22,37 @@ public class EvolveService {
     @Inject
     YakamonRepository yakamonRepository;
 
+    @Inject
+    YakadexEntryRepository yakadexEntryRepository;
+
+    @Inject
+    YakamonConverter yakamonConverter;
+
     public YakamonEntity evolve(String uuid) {
         // Check if game is started.
         gameRepository.checkGameExistence();
 
-        // 400 The yakamon needs more energy points to evolve.
-
         YakamonModel yakamon = yakamonRepository.getYakamonFromUUID(UUID.fromString(uuid));
 
-        // 404 The yakamon reached its maximum evolution tier.
+        if (yakamon.yakadexEntry.evolution == null) {
+            ErrorCode.NO_EVOLUTION_ERROR.throwException();
+        }
 
-        throw new NotImplementedException();
+        YakadexEntryModel entryModel = yakamon.getYakadexEntry();
+        if (entryModel.getEvolveThreshold() > yakamon.getEnergyPoints()) {
+            ErrorCode.NOT_ENOUGH_ENERGY_ERROR.throwException();
+        }
+
+        YakadexEntryModel evolution = entryModel.evolution;
+        yakadexEntryRepository.setCaughtStateById(evolution.id);
+
+        yakamon = yakamonRepository.evolve(
+                yakamon.uuid,
+                yakamon.nickname.compareTo(yakamon.yakadexEntry.name) == 0 ? evolution.name : yakamon.nickname,
+                yakamon.energyPoints - entryModel.getEvolveThreshold(),
+                evolution
+                );
+
+        return yakamonConverter.modelToEntity(yakamon);
     }
 }
