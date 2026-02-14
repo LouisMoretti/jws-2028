@@ -59,7 +59,7 @@ public class CollectService {
 
         PlayerModel player = playerRepository.getPlayer();
         LocalDateTime now = LocalDateTime.now();
-        if ((player.lastMove != null) && (player.lastMove.isAfter(now.minus(((long) jwsTickDuration * jwsCollectDelay),
+        if ((player.lastCollect != null) && (player.lastMove.isAfter(now.minus(((long) jwsTickDuration * jwsCollectDelay),
                 ChronoUnit.MILLIS)))) {
             ErrorCode.TOO_MANY_REQUESTS_ERROR.throwException();
         }
@@ -80,6 +80,7 @@ public class CollectService {
         itemModel.setType(itemType);
         itemModel.setQuantity(jwsCollectMultiplier);
         itemRepository.addItem(itemModel);
+        playerRepository.updateLastCollect(now);
 
         map.get(pos.getPosY()).get(pos.getPosX()).setCollectible(NONE);
         mapString = mapConverter.matrixToString(map);

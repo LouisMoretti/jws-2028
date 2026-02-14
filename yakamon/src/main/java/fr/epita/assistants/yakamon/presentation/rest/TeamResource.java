@@ -2,6 +2,7 @@ package fr.epita.assistants.yakamon.presentation.rest;
 
 import fr.epita.assistants.yakamon.converter.YakamonTeamConverter;
 import fr.epita.assistants.yakamon.domain.entity.YakamonTeamEntity;
+import fr.epita.assistants.yakamon.domain.service.ReleaseService;
 import fr.epita.assistants.yakamon.domain.service.TeamService;
 import fr.epita.assistants.yakamon.presentation.api.request.FeedRequest;
 import fr.epita.assistants.yakamon.presentation.api.request.RenameRequest;
@@ -20,6 +21,9 @@ public class TeamResource {
 
     @Inject
     YakamonTeamConverter yakamonTeamConverter;
+
+    @Inject
+    ReleaseService releaseService;
 
     @Path("/")
     @GET
@@ -45,7 +49,8 @@ public class TeamResource {
     @Path("/{uuid}/release")
     @DELETE
     public Response deleteRelease(@PathParam("uuid") long uuid) {
-        throw new NotImplementedException();
+        releaseService.release(uuid);
+        return Response.status(204, "Yakamon successfully released.").build();
     }
 
     @Path("/{uuid}/rename")

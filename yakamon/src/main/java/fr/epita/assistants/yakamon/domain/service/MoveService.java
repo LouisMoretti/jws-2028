@@ -60,7 +60,8 @@ public class MoveService {
         }
 
         // Update player pos in db.
-        playerRepository.movePlayer(newPos, now);
+        playerRepository.movePlayer(newPos);
+        playerRepository.updateLastMove(now);
 
         return new MoveEntity(newPos);
     }

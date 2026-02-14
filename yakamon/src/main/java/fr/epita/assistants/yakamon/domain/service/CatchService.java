@@ -63,7 +63,7 @@ public class CatchService {
 
         PlayerModel player = playerRepository.getPlayer();
         LocalDateTime now = LocalDateTime.now();
-        if ((player.lastMove != null) && (player.lastMove.isAfter(now.minus(((long) jwsTickDuration * jwsCatchDelay),
+        if ((player.lastCatch != null) && (player.lastMove.isAfter(now.minus(((long) jwsTickDuration * jwsCatchDelay),
                 ChronoUnit.MILLIS)))) {
             ErrorCode.TOO_MANY_REQUESTS_ERROR.throwException();
         }
@@ -90,6 +90,7 @@ public class CatchService {
         yakamonRepository.addYakamon(yakamonModel);
         itemRepository.removeItem(1, YAKABALL);
         yakadexEntryRepository.setCaughtStateById(yakadexId);
+        playerRepository.updateLastCatch(now);
 
         map.get(pos.getPosY()).get(pos.getPosX()).setCollectible(NONE);
         mapString = mapConverter.matrixToString(map);
