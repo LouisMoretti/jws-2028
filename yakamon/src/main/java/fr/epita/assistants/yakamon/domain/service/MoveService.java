@@ -11,7 +11,6 @@ import fr.epita.assistants.yakamon.utils.Point;
 import fr.epita.assistants.yakamon.utils.tile.TileType;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.time.LocalDateTime;
@@ -35,20 +34,24 @@ public class MoveService {
     @ConfigProperty(name = "JWS_MOVEMENT_DELAY")
     Integer jwsMovementDelay;
 
-    @Transactional
     public MoveEntity movePlayer(Direction direction) {
+        if (direction == null)
+            ErrorCode.INVALID_DIRECTION_ERROR.throwException();
+
         // Check if game is started.
         gameRepository.checkGameExistence();
 
-        PlayerModel player = playerRepository.listAll().getFirst();
+        PlayerModel player = playerRepository.getPlayer();
         LocalDateTime now = LocalDateTime.now();
         if ((player.lastMove != null) && (player.lastMove.isAfter(now.minus(((long) jwsTickDuration * jwsMovementDelay), ChronoUnit.MILLIS)))) {
             ErrorCode.TOO_MANY_REQUESTS_ERROR.throwException();
         }
 
-        String mapString = gameRepository.listAll().getFirst().getMap();
+        String mapString = gameRepository.getMap();
         List<List<TileType>> map = mapConverter.stringToMatrix(mapString);
 
+        // Check new position.
+        // TODO; Advanced move.
         Point newPos = new Point(player.getPosX() + direction.getPoint().getPosX(),
                 player.getPosY() + direction.getPoint().getPosY());
         if (newPos.getPosX() < 0 || newPos.getPosY() < 0 || newPos.getPosY() >= map.size() || newPos.getPosX() >= map.get(newPos.getPosY()).size()
@@ -56,10 +59,8 @@ public class MoveService {
             ErrorCode.INVALID_DIRECTION_ERROR.throwException();
         }
 
-        // TODO; Move to repository.
-        player.setPosX(newPos.getPosX());
-        player.setPosY(newPos.getPosY());
-        player.setLastMove(now);
+        // Update player pos in db.
+        playerRepository.movePlayer(newPos, now);
 
         return new MoveEntity(newPos);
     }

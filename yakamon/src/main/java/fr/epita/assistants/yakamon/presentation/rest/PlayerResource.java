@@ -1,9 +1,13 @@
 package fr.epita.assistants.yakamon.presentation.rest;
 
+import fr.epita.assistants.yakamon.converter.YakamonConverter;
+import fr.epita.assistants.yakamon.domain.entity.CatchEntity;
 import fr.epita.assistants.yakamon.domain.entity.MoveEntity;
+import fr.epita.assistants.yakamon.domain.service.CatchService;
 import fr.epita.assistants.yakamon.domain.service.MoveService;
 import fr.epita.assistants.yakamon.presentation.api.request.MoveRequest;
 import fr.epita.assistants.yakamon.presentation.api.response.MoveResponse;
+import fr.epita.assistants.yakamon.presentation.api.response.YakamonResponse;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -19,10 +23,19 @@ public class PlayerResource {
     @Inject
     MoveService moveService;
 
+    @Inject
+    CatchService catchService;
+
+    @Inject
+    YakamonConverter yakamonConverter;
+
     @Path("/catch")
     @POST
     public Response postCatch() {
-        throw new NotImplementedException();
+        CatchEntity catchEntity = catchService.catchYakamon();
+
+        YakamonResponse yakamonResponse = yakamonConverter.entityToResponse(catchEntity);
+        return Response.ok(yakamonResponse, MediaType.APPLICATION_JSON).build();
     }
 
     @Path("/collect")

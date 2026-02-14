@@ -24,4 +24,9 @@ public class YakadexEntryRepository implements PanacheRepository<YakadexEntryMod
     public YakadexEntryModel getEntryById(long id) {
         return findById(id);
     }
+
+    @Transactional
+    public void setCaughtStateById(long id) {
+        findById(id).setCaught(true);
+    }
 }
