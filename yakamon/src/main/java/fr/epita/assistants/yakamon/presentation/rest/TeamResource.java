@@ -1,7 +1,11 @@
 package fr.epita.assistants.yakamon.presentation.rest;
 
+import fr.epita.assistants.yakamon.converter.FeedConverter;
+import fr.epita.assistants.yakamon.converter.RenameConverter;
 import fr.epita.assistants.yakamon.converter.YakamonConverter;
 import fr.epita.assistants.yakamon.converter.YakamonTeamConverter;
+import fr.epita.assistants.yakamon.domain.entity.FeedEntity;
+import fr.epita.assistants.yakamon.domain.entity.RenameEntity;
 import fr.epita.assistants.yakamon.domain.entity.YakamonEntity;
 import fr.epita.assistants.yakamon.domain.entity.YakamonTeamEntity;
 import fr.epita.assistants.yakamon.domain.service.*;
@@ -38,6 +42,12 @@ public class TeamResource {
     @Inject
     YakamonConverter yakamonConverter;
 
+    @Inject
+    FeedConverter feedConverter;
+
+    @Inject
+    RenameConverter renameConverter;
+
     @Path("/")
     @GET
     public Response getTeam() {
@@ -59,8 +69,8 @@ public class TeamResource {
     @Path("/{uuid}/feed")
     @POST
     public Response postFeed(@PathParam("uuid") String uuid, FeedRequest feedRequest) {
-        // TODO; Use feed entity.
-        YakamonEntity yakamon = feedService.feed(uuid, feedRequest);
+        FeedEntity feedEntity = feedConverter.requestToEntity(uuid, feedRequest);
+        YakamonEntity yakamon = feedService.feed(feedEntity);
 
         YakamonResponse response = yakamonConverter.entityToResponse(yakamon);
         return Response.ok(response, MediaType.APPLICATION_JSON).build();
@@ -76,8 +86,8 @@ public class TeamResource {
     @Path("/{uuid}/rename")
     @PATCH
     public Response patchRename(@PathParam("uuid") String uuid, RenameRequest renameRequest) {
-        // TODO; Use rename entity.
-        YakamonEntity yakamon = renameService.rename(uuid, renameRequest);
+        RenameEntity renameEntity = renameConverter.requestToEntity(uuid, renameRequest);
+        YakamonEntity yakamon = renameService.rename(renameEntity);
 
         YakamonResponse response = yakamonConverter.entityToResponse(yakamon);
         return Response.ok(response, MediaType.APPLICATION_JSON).build();
