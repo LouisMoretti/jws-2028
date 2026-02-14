@@ -3,27 +3,31 @@ package fr.epita.assistants.yakamon.domain.service;
 import fr.epita.assistants.yakamon.data.model.YakamonModel;
 import fr.epita.assistants.yakamon.data.repository.GameRepository;
 import fr.epita.assistants.yakamon.data.repository.YakamonRepository;
+import fr.epita.assistants.yakamon.domain.entity.YakamonEntity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.apache.commons.lang.NotImplementedException;
 
 import java.util.UUID;
 
 @ApplicationScoped
-public class ReleaseService {
+public class EvolveService {
     @Inject
     GameRepository gameRepository;
 
     @Inject
     YakamonRepository yakamonRepository;
 
-    public void release(String uuid) {
+    public YakamonEntity evolve(String uuid) {
         // Check if game is started.
         gameRepository.checkGameExistence();
 
+        // 400 The yakamon needs more energy points to evolve.
+
         YakamonModel yakamon = yakamonRepository.getYakamonFromUUID(UUID.fromString(uuid));
 
-        // TODO; Status code 403.
+        // 404 The yakamon reached its maximum evolution tier.
 
-        yakamonRepository.deleteFromModel(yakamon);
+        throw new NotImplementedException();
     }
 }

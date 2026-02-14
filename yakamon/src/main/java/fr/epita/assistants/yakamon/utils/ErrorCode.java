@@ -10,6 +10,7 @@ import static jakarta.ws.rs.core.Response.Status;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {
+    YAKAMON_NOT_FOUND_ERROR(Status.NOT_FOUND, "The yakamon was not found in the team."),
     NO_ITEM_AT_POS_ERROR(Status.BAD_REQUEST, "No item at the current position."),
     TEAM_IS_FULL_ERROR(Status.BAD_REQUEST, "Team is full."),
     NO_YAKAMON_AT_POS_ERROR(Status.BAD_REQUEST, "No Yakamon at the current position."),
