@@ -51,7 +51,7 @@ public class MoveService {
         List<List<TileType>> map = mapConverter.stringToMatrix(mapString);
 
         // Check new position.
-        // TODO; Advanced move.
+        // TODO: Advanced move.
         Point newPos = new Point(player.getPosX() + direction.getPoint().getPosX(),
                 player.getPosY() + direction.getPoint().getPosY());
         if (newPos.getPosX() < 0 || newPos.getPosY() < 0 || newPos.getPosY() >= map.size() || newPos.getPosX() >= map.get(newPos.getPosY()).size()

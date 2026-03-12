@@ -31,7 +31,8 @@ public class MapConverter {
                     lineTiles.add(tile);
                 }
             }
-            tiles.add(lineTiles);
+            if (!lineTiles.isEmpty())
+                tiles.add(lineTiles);
         }
 
         if (tiles.isEmpty())
